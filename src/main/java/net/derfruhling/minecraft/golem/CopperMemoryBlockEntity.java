@@ -86,11 +86,11 @@ public class CopperMemoryBlockEntity extends BlockEntity {
     }
 
     @Nullable
-    public List<BlockPos> get(Item item) {
+    public synchronized List<BlockPos> get(Item item) {
         return get(Registries.ITEM.getRawId(item));
     }
 
-    public void found(Item item, BlockPos pos) {
+    public synchronized void found(Item item, BlockPos pos) {
         int itemId = Registries.ITEM.getRawId(item);
         List<BlockPos> loc = get(itemId);
 
@@ -108,9 +108,9 @@ public class CopperMemoryBlockEntity extends BlockEntity {
         markDirty();
     }
 
-    public void dead(Item item, BlockPos pos) {
+    public synchronized void dead(Item item, BlockPos pos) {
         int itemId = Registries.ITEM.getRawId(item);
-        List<BlockPos> loc = get(item);
+        List<BlockPos> loc = get(itemId);
 
         if(loc != null) {
             loc.remove(pos);
