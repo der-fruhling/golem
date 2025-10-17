@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "golem:block/oxidized_memory_block_updating"
+  }
+}

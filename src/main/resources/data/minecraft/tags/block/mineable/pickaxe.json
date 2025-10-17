@@ -1,0 +1,12 @@
+{
+  "values": [
+    "golem:memory_block",
+    "golem:exposed_memory_block",
+    "golem:weathered_memory_block",
+    "golem:oxidized_memory_block",
+    "golem:waxed_memory_block",
+    "golem:waxed_exposed_memory_block",
+    "golem:waxed_weathered_memory_block",
+    "golem:waxed_oxidized_memory_block"
+  ]
+}

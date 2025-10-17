@@ -1,0 +1,10 @@
+{
+  "item.golem.memory_block": "Copper Memory Block",
+  "item.golem.exposed_memory_block": "Exposed Copper Memory Block",
+  "item.golem.weathered_memory_block": "Weathered Copper Memory Block",
+  "item.golem.oxidized_memory_block": "Oxidized Copper Memory Block",
+  "item.golem.waxed_memory_block": "Waxed Copper Memory Block",
+  "item.golem.waxed_exposed_memory_block": "Waxed Exposed Copper Memory Block",
+  "item.golem.waxed_weathered_memory_block": "Waxed Weathered Copper Memory Block",
+  "item.golem.waxed_oxidized_memory_block": "Waxed Oxidized Copper Memory Block"
+}

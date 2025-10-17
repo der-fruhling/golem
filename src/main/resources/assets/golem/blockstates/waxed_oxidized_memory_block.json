@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "golem:block/oxidized_memory_block"
+    }
+  }
+}

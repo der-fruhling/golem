@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "golem",
+  "version": "${version}",
+  "name": "Golem",
+  "description": "Improves Copper Golem AI by adding a memory block to store item locations",
+  "authors": [
+    "der_frühling"
+  ],
+  "contact": {
+    "issues": "https://github.com/der-fruhling/golem/issues",
+    "sources": "https://github.com/der-fruhling/golem"
+  },
+  "license": "GPL-3.0",
+  "icon": "assets/golem/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.derfruhling.minecraft.golem.Golem"
+    ]
+  },
+  "mixins": [
+    "golem.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": ">=1.21.9"
+  }
+}

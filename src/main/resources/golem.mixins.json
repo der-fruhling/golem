@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.derfruhling.minecraft.golem.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "CopperGolemBrainMixin",
+    "MoveItemsTaskMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}

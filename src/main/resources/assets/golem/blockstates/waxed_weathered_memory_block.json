@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "golem:block/weathered_memory_block"
+    }
+  }
+}

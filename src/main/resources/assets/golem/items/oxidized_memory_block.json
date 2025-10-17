@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "golem:block/oxidized_memory_block"
+  }
+}

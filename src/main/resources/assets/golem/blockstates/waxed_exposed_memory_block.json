@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "golem:block/exposed_memory_block"
+    }
+  }
+}

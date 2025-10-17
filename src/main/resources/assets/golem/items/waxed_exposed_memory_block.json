@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "golem:block/exposed_memory_block"
+  }
+}
