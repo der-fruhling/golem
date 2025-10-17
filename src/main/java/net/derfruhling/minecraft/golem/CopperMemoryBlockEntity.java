@@ -25,7 +25,7 @@ public class CopperMemoryBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void writeData(WriteView view) {
+    protected synchronized void writeData(WriteView view) {
         super.writeData(view);
         view.put("items", MAP_CODEC, ImmutableMap.copyOf(items.entrySet().stream().map(e -> new Map.Entry<Identifier, List<BlockPos>>() {
             @Override
@@ -62,7 +62,7 @@ public class CopperMemoryBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void readData(ReadView view) {
+    protected synchronized void readData(ReadView view) {
         super.readData(view);
 
         items.clear();
