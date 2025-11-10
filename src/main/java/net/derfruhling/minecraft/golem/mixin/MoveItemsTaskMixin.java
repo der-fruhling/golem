@@ -138,6 +138,7 @@ public abstract class MoveItemsTaskMixin extends MultiTickTask<PathAwareEntity> 
                 }
             }
             deadItemCache.forEach(memory::dead);
+            deadItemCache.clear();
         }
     }
 
