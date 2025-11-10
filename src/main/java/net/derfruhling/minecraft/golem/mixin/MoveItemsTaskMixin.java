@@ -15,6 +15,7 @@ import net.minecraft.entity.ai.brain.task.MoveItemsTask;
 import net.minecraft.entity.ai.brain.task.MultiTickTask;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
@@ -39,6 +40,9 @@ public abstract class MoveItemsTaskMixin extends MultiTickTask<PathAwareEntity> 
     private static boolean canPickUpItem(PathAwareEntity entity) {
         return false;
     }
+
+    @Unique
+    private final Map<Item, BlockPos> deadItemCache = new HashMap<>();
 
     private MoveItemsTaskMixin(Map<MemoryModuleType<?>, MemoryModuleState> requiredMemoryState) {
         super(requiredMemoryState);
@@ -130,9 +134,11 @@ public abstract class MoveItemsTaskMixin extends MultiTickTask<PathAwareEntity> 
                     cir.setReturnValue(Optional.ofNullable(MoveItemsTask.Storage.forContainer(newBlockEntity, world)));
                     return;
                 } else {
-                    memory.dead(stack.getItem(), pos);
+                    deadItemCache.put(stack.getItem(), pos);
                 }
             }
+            deadItemCache.forEach(memory::dead);
+            deadItemCache.clear();
         }
     }
 
