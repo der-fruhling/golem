@@ -72,7 +72,7 @@ public class CopperMemoryBlockEntity extends BlockEntity {
             for(var e : map.get().entrySet()) {
                 if(!Registries.ITEM.containsId(e.getKey())) continue;
                 int item = Registries.ITEM.getRawId(Registries.ITEM.get(e.getKey()));
-                items.put(item, e.getValue());
+                items.put(item, new ArrayList<>(e.getValue()));
 
                 for(BlockPos pos : e.getValue()) {
                     addContainer(item, pos);
