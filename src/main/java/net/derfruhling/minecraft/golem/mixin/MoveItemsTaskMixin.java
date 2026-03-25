@@ -1,5 +1,6 @@
 package net.derfruhling.minecraft.golem.mixin;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -119,7 +120,7 @@ public abstract class MoveItemsTaskMixin extends MultiTickTask<PathAwareEntity> 
             if(!getTriedMemoryBlock(entity) && !tryNext.hasNext()) {
                 List<BlockPos> loc = memory.get(stack.getItem());
                 if(loc != null) {
-                    tryNext = loc.iterator();
+                    tryNext = ImmutableList.copyOf(loc).iterator();
                     entity.getBrain().remember(Golem.REMAINING_MEMORY_HITS, tryNext);
                     entity.getBrain().remember(Golem.TRIED_SHARED_MEMORY, true);
                 } else {
