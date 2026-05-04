@@ -2,15 +2,16 @@ package net.derfruhling.minecraft.golem;
 
 import com.google.common.collect.ImmutableMap;
 import com.mojang.serialization.Codec;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.item.Item;
-import net.minecraft.registry.Registries;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
 
 import java.util.*;
 
@@ -25,12 +26,12 @@ public class CopperMemoryBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected synchronized void writeData(WriteView view) {
-        super.writeData(view);
-        view.put("items", MAP_CODEC, ImmutableMap.copyOf(items.entrySet().stream().map(e -> new Map.Entry<Identifier, List<BlockPos>>() {
+    protected synchronized void saveAdditional(@NonNull ValueOutput out) {
+        super.saveAdditional(out);
+        out.store("items", MAP_CODEC, ImmutableMap.copyOf(items.entrySet().stream().map(e -> new Map.Entry<Identifier, List<BlockPos>>() {
             @Override
             public Identifier getKey() {
-                return Registries.ITEM.getId(Registries.ITEM.get(e.getKey()));
+                return BuiltInRegistries.ITEM.get(e.getKey()).map(v -> v.key().identifier()).orElse(null);
             }
 
             @Override
@@ -62,16 +63,16 @@ public class CopperMemoryBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected synchronized void readData(ReadView view) {
-        super.readData(view);
+    protected synchronized void loadAdditional(@NonNull ValueInput in) {
+        super.loadAdditional(in);
 
         items.clear();
-        var map = view.read("items", MAP_CODEC);
+        var map = in.read("items", MAP_CODEC);
 
         if(map.isPresent()) {
             for(var e : map.get().entrySet()) {
-                if(!Registries.ITEM.containsId(e.getKey())) continue;
-                int item = Registries.ITEM.getRawId(Registries.ITEM.get(e.getKey()));
+                if(!BuiltInRegistries.ITEM.containsKey(e.getKey())) continue;
+                int item = BuiltInRegistries.ITEM.getId(BuiltInRegistries.ITEM.getValue(e.getKey()));
                 items.put(item, new ArrayList<>(e.getValue()));
 
                 for(BlockPos pos : e.getValue()) {
@@ -87,11 +88,11 @@ public class CopperMemoryBlockEntity extends BlockEntity {
 
     @Nullable
     public synchronized List<BlockPos> get(Item item) {
-        return get(Registries.ITEM.getRawId(item));
+        return get(BuiltInRegistries.ITEM.getId(item));
     }
 
     public synchronized void found(Item item, BlockPos pos) {
-        int itemId = Registries.ITEM.getRawId(item);
+        int itemId = BuiltInRegistries.ITEM.getId(item);
         List<BlockPos> loc = get(itemId);
 
         if(loc != null) {
@@ -105,11 +106,11 @@ public class CopperMemoryBlockEntity extends BlockEntity {
         }
 
         addContainer(itemId, pos);
-        markDirty();
+        setChanged();
     }
 
     public synchronized void dead(Item item, BlockPos pos) {
-        int itemId = Registries.ITEM.getRawId(item);
+        int itemId = BuiltInRegistries.ITEM.getId(item);
         List<BlockPos> loc = get(itemId);
 
         if(loc != null) {
@@ -120,6 +121,6 @@ public class CopperMemoryBlockEntity extends BlockEntity {
         }
 
         removeContainer(itemId, pos);
-        markDirty();
+        setChanged();
     }
 }

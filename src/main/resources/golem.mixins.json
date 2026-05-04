@@ -4,8 +4,8 @@
   "package": "net.derfruhling.minecraft.golem.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "CopperGolemBrainMixin",
-    "MoveItemsTaskMixin"
+    "TransportItemsBetweenContainersMixin",
+    "TransportItemsBetweenContainersMixin"
   ],
   "injectors": {
     "defaultRequire": 1

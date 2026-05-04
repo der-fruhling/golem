@@ -1,28 +1,25 @@
 package net.derfruhling.minecraft.golem;
 
 import com.mojang.serialization.MapCodec;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.BlockWithEntity;
-import net.minecraft.block.Oxidizable;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.util.math.BlockPos;
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.WeatheringCopper;
+import org.jspecify.annotations.NonNull;
 
-public class OxidizableCopperMemoryBlock extends CopperMemoryBlock implements Oxidizable {
-    private final Oxidizable.OxidationLevel level;
+public class OxidizableCopperMemoryBlock extends CopperMemoryBlock implements WeatheringCopper {
+    private final WeatheringCopper.WeatherState level;
 
-    public OxidizableCopperMemoryBlock(Settings settings, OxidationLevel level) {
+    public OxidizableCopperMemoryBlock(Properties settings, WeatheringCopper.WeatherState level) {
         super(settings);
         this.level = level;
     }
 
     @Override
-    protected MapCodec<? extends BlockWithEntity> getCodec() {
-        return createCodec(s -> new OxidizableCopperMemoryBlock(s, level));
+    protected @NonNull MapCodec<? extends BaseEntityBlock> codec() {
+        return simpleCodec(s -> new OxidizableCopperMemoryBlock(s, level));
     }
 
     @Override
-    public Oxidizable.OxidationLevel getDegradationLevel() {
+    public WeatheringCopper.@NonNull WeatherState getAge() {
         return level;
     }
 }
